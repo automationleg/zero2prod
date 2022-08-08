@@ -1,7 +1,5 @@
 name: Rust
 
-on: [push, pull_request]
-
 env:
   CARGO_TERM_COLOR: always
 
@@ -185,10 +183,12 @@ jobs:
             --features=${{ env.SQLX_FEATURES }}
             --no-default-features
             --locked
+
       - name: Migrate database
         run: |
           sudo apt-get install libpq-dev -y
           SKIP_DOCKER=true ./scripts/init_db.sh
+
       - name: Run cargo-tarpaulin
         uses: actions-rs/tarpaulin@v0.1
         with:
